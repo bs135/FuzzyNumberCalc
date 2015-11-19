@@ -35,30 +35,34 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.pnlLeft = new System.Windows.Forms.Panel();
             this.grbFooter = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.grbFuzzyNumber = new System.Windows.Forms.GroupBox();
             this.grbFuzzyNumberB = new System.Windows.Forms.GroupBox();
+            this.lblInvalidNumB = new System.Windows.Forms.Label();
             this.txtBTopLeft = new System.Windows.Forms.TextBox();
             this.txtBBotLeft = new System.Windows.Forms.TextBox();
             this.txtBTopRight = new System.Windows.Forms.TextBox();
             this.txtBBotRight = new System.Windows.Forms.TextBox();
             this.grbFuzzyNumberA = new System.Windows.Forms.GroupBox();
+            this.lblInvalidNumA = new System.Windows.Forms.Label();
             this.txtATopLeft = new System.Windows.Forms.TextBox();
             this.txtABotLeft = new System.Windows.Forms.TextBox();
             this.txtATopRight = new System.Windows.Forms.TextBox();
             this.txtABotRight = new System.Windows.Forms.TextBox();
             this.grbOperation = new System.Windows.Forms.GroupBox();
-            this.radOperationDiv = new System.Windows.Forms.RadioButton();
-            this.radOperationMul = new System.Windows.Forms.RadioButton();
-            this.radOperationSub = new System.Windows.Forms.RadioButton();
-            this.radOperationAdd = new System.Windows.Forms.RadioButton();
+            this.chkOperationDiv = new System.Windows.Forms.CheckBox();
+            this.chkOperationMul = new System.Windows.Forms.CheckBox();
+            this.chkOperationSub = new System.Windows.Forms.CheckBox();
+            this.chkOperationAdd = new System.Windows.Forms.CheckBox();
             this.grbBase = new System.Windows.Forms.GroupBox();
             this.radIntervalBased = new System.Windows.Forms.RadioButton();
             this.radEPBased = new System.Windows.Forms.RadioButton();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.chartFuzzy = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.epValidate = new System.Windows.Forms.ErrorProvider(this.components);
+            this.epInValid = new System.Windows.Forms.ErrorProvider(this.components);
+            this.grbOption = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtSmooth = new System.Windows.Forms.TextBox();
             this.pnlLeft.SuspendLayout();
             this.grbFooter.SuspendLayout();
             this.grbFuzzyNumber.SuspendLayout();
@@ -68,11 +72,13 @@
             this.grbBase.SuspendLayout();
             this.pnlMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartFuzzy)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.epValidate)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.epInValid)).BeginInit();
+            this.grbOption.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlLeft
             // 
+            this.pnlLeft.Controls.Add(this.grbOption);
             this.pnlLeft.Controls.Add(this.grbFooter);
             this.pnlLeft.Controls.Add(this.grbFuzzyNumber);
             this.pnlLeft.Controls.Add(this.grbOperation);
@@ -80,29 +86,18 @@
             this.pnlLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlLeft.Location = new System.Drawing.Point(0, 0);
             this.pnlLeft.Name = "pnlLeft";
-            this.pnlLeft.Size = new System.Drawing.Size(246, 409);
+            this.pnlLeft.Size = new System.Drawing.Size(246, 532);
             this.pnlLeft.TabIndex = 0;
             // 
             // grbFooter
             // 
-            this.grbFooter.Controls.Add(this.button1);
             this.grbFooter.Controls.Add(this.btnOK);
             this.grbFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.grbFooter.Location = new System.Drawing.Point(0, 362);
+            this.grbFooter.Location = new System.Drawing.Point(0, 485);
             this.grbFooter.Name = "grbFooter";
             this.grbFooter.Size = new System.Drawing.Size(246, 47);
             this.grbFooter.TabIndex = 4;
             this.grbFooter.TabStop = false;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(16, 15);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Test";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // btnOK
             // 
@@ -128,6 +123,7 @@
             // 
             // grbFuzzyNumberB
             // 
+            this.grbFuzzyNumberB.Controls.Add(this.lblInvalidNumB);
             this.grbFuzzyNumberB.Controls.Add(this.txtBTopLeft);
             this.grbFuzzyNumberB.Controls.Add(this.txtBBotLeft);
             this.grbFuzzyNumberB.Controls.Add(this.txtBTopRight);
@@ -139,6 +135,15 @@
             this.grbFuzzyNumberB.TabIndex = 1;
             this.grbFuzzyNumberB.TabStop = false;
             this.grbFuzzyNumberB.Text = "B";
+            // 
+            // lblInvalidNumB
+            // 
+            this.lblInvalidNumB.AutoSize = true;
+            this.lblInvalidNumB.Location = new System.Drawing.Point(3, 15);
+            this.lblInvalidNumB.Name = "lblInvalidNumB";
+            this.lblInvalidNumB.Size = new System.Drawing.Size(10, 13);
+            this.lblInvalidNumB.TabIndex = 5;
+            this.lblInvalidNumB.Text = " ";
             // 
             // txtBTopLeft
             // 
@@ -164,7 +169,7 @@
             this.txtBTopRight.Name = "txtBTopRight";
             this.txtBTopRight.Size = new System.Drawing.Size(50, 20);
             this.txtBTopRight.TabIndex = 2;
-            this.txtBTopRight.Text = "3";
+            this.txtBTopRight.Text = "4";
             this.txtBTopRight.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtBBotRight
@@ -178,6 +183,7 @@
             // 
             // grbFuzzyNumberA
             // 
+            this.grbFuzzyNumberA.Controls.Add(this.lblInvalidNumA);
             this.grbFuzzyNumberA.Controls.Add(this.txtATopLeft);
             this.grbFuzzyNumberA.Controls.Add(this.txtABotLeft);
             this.grbFuzzyNumberA.Controls.Add(this.txtATopRight);
@@ -189,6 +195,15 @@
             this.grbFuzzyNumberA.TabIndex = 0;
             this.grbFuzzyNumberA.TabStop = false;
             this.grbFuzzyNumberA.Text = "A";
+            // 
+            // lblInvalidNumA
+            // 
+            this.lblInvalidNumA.AutoSize = true;
+            this.lblInvalidNumA.Location = new System.Drawing.Point(3, 15);
+            this.lblInvalidNumA.Name = "lblInvalidNumA";
+            this.lblInvalidNumA.Size = new System.Drawing.Size(10, 13);
+            this.lblInvalidNumA.TabIndex = 4;
+            this.lblInvalidNumA.Text = " ";
             // 
             // txtATopLeft
             // 
@@ -214,7 +229,7 @@
             this.txtATopRight.Name = "txtATopRight";
             this.txtATopRight.Size = new System.Drawing.Size(50, 20);
             this.txtATopRight.TabIndex = 2;
-            this.txtATopRight.Text = "3.5";
+            this.txtATopRight.Text = "3";
             this.txtATopRight.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtABotRight
@@ -228,10 +243,10 @@
             // 
             // grbOperation
             // 
-            this.grbOperation.Controls.Add(this.radOperationDiv);
-            this.grbOperation.Controls.Add(this.radOperationMul);
-            this.grbOperation.Controls.Add(this.radOperationSub);
-            this.grbOperation.Controls.Add(this.radOperationAdd);
+            this.grbOperation.Controls.Add(this.chkOperationDiv);
+            this.grbOperation.Controls.Add(this.chkOperationMul);
+            this.grbOperation.Controls.Add(this.chkOperationSub);
+            this.grbOperation.Controls.Add(this.chkOperationAdd);
             this.grbOperation.Dock = System.Windows.Forms.DockStyle.Top;
             this.grbOperation.Location = new System.Drawing.Point(0, 69);
             this.grbOperation.Name = "grbOperation";
@@ -240,47 +255,47 @@
             this.grbOperation.TabStop = false;
             this.grbOperation.Text = "Operations";
             // 
-            // radOperationDiv
+            // chkOperationDiv
             // 
-            this.radOperationDiv.AutoSize = true;
-            this.radOperationDiv.Location = new System.Drawing.Point(12, 88);
-            this.radOperationDiv.Name = "radOperationDiv";
-            this.radOperationDiv.Size = new System.Drawing.Size(62, 17);
-            this.radOperationDiv.TabIndex = 4;
-            this.radOperationDiv.Text = "Division";
-            this.radOperationDiv.UseVisualStyleBackColor = true;
+            this.chkOperationDiv.AutoSize = true;
+            this.chkOperationDiv.Location = new System.Drawing.Point(12, 89);
+            this.chkOperationDiv.Name = "chkOperationDiv";
+            this.chkOperationDiv.Size = new System.Drawing.Size(63, 17);
+            this.chkOperationDiv.TabIndex = 8;
+            this.chkOperationDiv.Text = "Division";
+            this.chkOperationDiv.UseVisualStyleBackColor = true;
             // 
-            // radOperationMul
+            // chkOperationMul
             // 
-            this.radOperationMul.AutoSize = true;
-            this.radOperationMul.Location = new System.Drawing.Point(12, 65);
-            this.radOperationMul.Name = "radOperationMul";
-            this.radOperationMul.Size = new System.Drawing.Size(86, 17);
-            this.radOperationMul.TabIndex = 3;
-            this.radOperationMul.Text = "Multiplication";
-            this.radOperationMul.UseVisualStyleBackColor = true;
+            this.chkOperationMul.AutoSize = true;
+            this.chkOperationMul.Location = new System.Drawing.Point(12, 66);
+            this.chkOperationMul.Name = "chkOperationMul";
+            this.chkOperationMul.Size = new System.Drawing.Size(87, 17);
+            this.chkOperationMul.TabIndex = 7;
+            this.chkOperationMul.Text = "Multiplication";
+            this.chkOperationMul.UseVisualStyleBackColor = true;
             // 
-            // radOperationSub
+            // chkOperationSub
             // 
-            this.radOperationSub.AutoSize = true;
-            this.radOperationSub.Location = new System.Drawing.Point(12, 42);
-            this.radOperationSub.Name = "radOperationSub";
-            this.radOperationSub.Size = new System.Drawing.Size(79, 17);
-            this.radOperationSub.TabIndex = 2;
-            this.radOperationSub.Text = "Subtraction";
-            this.radOperationSub.UseVisualStyleBackColor = true;
+            this.chkOperationSub.AutoSize = true;
+            this.chkOperationSub.Location = new System.Drawing.Point(12, 43);
+            this.chkOperationSub.Name = "chkOperationSub";
+            this.chkOperationSub.Size = new System.Drawing.Size(80, 17);
+            this.chkOperationSub.TabIndex = 6;
+            this.chkOperationSub.Text = "Subtraction";
+            this.chkOperationSub.UseVisualStyleBackColor = true;
             // 
-            // radOperationAdd
+            // chkOperationAdd
             // 
-            this.radOperationAdd.AutoSize = true;
-            this.radOperationAdd.Checked = true;
-            this.radOperationAdd.Location = new System.Drawing.Point(12, 19);
-            this.radOperationAdd.Name = "radOperationAdd";
-            this.radOperationAdd.Size = new System.Drawing.Size(63, 17);
-            this.radOperationAdd.TabIndex = 1;
-            this.radOperationAdd.TabStop = true;
-            this.radOperationAdd.Text = "Addition";
-            this.radOperationAdd.UseVisualStyleBackColor = true;
+            this.chkOperationAdd.AutoSize = true;
+            this.chkOperationAdd.Checked = true;
+            this.chkOperationAdd.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkOperationAdd.Location = new System.Drawing.Point(12, 20);
+            this.chkOperationAdd.Name = "chkOperationAdd";
+            this.chkOperationAdd.Size = new System.Drawing.Size(64, 17);
+            this.chkOperationAdd.TabIndex = 5;
+            this.chkOperationAdd.Text = "Addition";
+            this.chkOperationAdd.UseVisualStyleBackColor = true;
             // 
             // grbBase
             // 
@@ -322,7 +337,7 @@
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMain.Location = new System.Drawing.Point(246, 0);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(675, 409);
+            this.pnlMain.Size = new System.Drawing.Size(675, 532);
             this.pnlMain.TabIndex = 1;
             // 
             // chartFuzzy
@@ -338,20 +353,51 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chartFuzzy.Series.Add(series1);
-            this.chartFuzzy.Size = new System.Drawing.Size(675, 409);
+            this.chartFuzzy.Size = new System.Drawing.Size(675, 532);
             this.chartFuzzy.TabIndex = 0;
             this.chartFuzzy.Text = "chart1";
             // 
-            // epValidate
+            // epInValid
             // 
-            this.epValidate.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
-            this.epValidate.ContainerControl = this;
+            this.epInValid.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.epInValid.ContainerControl = this;
+            this.epInValid.Icon = ((System.Drawing.Icon)(resources.GetObject("epInValid.Icon")));
+            // 
+            // grbOption
+            // 
+            this.grbOption.Controls.Add(this.txtSmooth);
+            this.grbOption.Controls.Add(this.label1);
+            this.grbOption.Dock = System.Windows.Forms.DockStyle.Top;
+            this.grbOption.Location = new System.Drawing.Point(0, 345);
+            this.grbOption.Name = "grbOption";
+            this.grbOption.Size = new System.Drawing.Size(246, 66);
+            this.grbOption.TabIndex = 5;
+            this.grbOption.TabStop = false;
+            this.grbOption.Text = "Options";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 29);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(43, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Smooth";
+            // 
+            // txtSmooth
+            // 
+            this.txtSmooth.Location = new System.Drawing.Point(114, 26);
+            this.txtSmooth.Name = "txtSmooth";
+            this.txtSmooth.Size = new System.Drawing.Size(100, 20);
+            this.txtSmooth.TabIndex = 1;
+            this.txtSmooth.Text = "0.1";
+            this.txtSmooth.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(921, 409);
+            this.ClientSize = new System.Drawing.Size(921, 532);
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.pnlLeft);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -371,7 +417,9 @@
             this.grbBase.PerformLayout();
             this.pnlMain.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartFuzzy)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.epValidate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.epInValid)).EndInit();
+            this.grbOption.ResumeLayout(false);
+            this.grbOption.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -384,10 +432,6 @@
         private System.Windows.Forms.RadioButton radIntervalBased;
         private System.Windows.Forms.RadioButton radEPBased;
         private System.Windows.Forms.GroupBox grbOperation;
-        private System.Windows.Forms.RadioButton radOperationSub;
-        private System.Windows.Forms.RadioButton radOperationAdd;
-        private System.Windows.Forms.RadioButton radOperationDiv;
-        private System.Windows.Forms.RadioButton radOperationMul;
         private System.Windows.Forms.GroupBox grbFuzzyNumber;
         private System.Windows.Forms.TextBox txtABotRight;
         private System.Windows.Forms.TextBox txtATopRight;
@@ -402,8 +446,16 @@
         private System.Windows.Forms.GroupBox grbFuzzyNumberA;
         private System.Windows.Forms.GroupBox grbFooter;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartFuzzy;
-        private System.Windows.Forms.ErrorProvider epValidate;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ErrorProvider epInValid;
+        private System.Windows.Forms.Label lblInvalidNumB;
+        private System.Windows.Forms.Label lblInvalidNumA;
+        private System.Windows.Forms.CheckBox chkOperationDiv;
+        private System.Windows.Forms.CheckBox chkOperationMul;
+        private System.Windows.Forms.CheckBox chkOperationSub;
+        private System.Windows.Forms.CheckBox chkOperationAdd;
+        private System.Windows.Forms.GroupBox grbOption;
+        private System.Windows.Forms.TextBox txtSmooth;
+        private System.Windows.Forms.Label label1;
 
 
 

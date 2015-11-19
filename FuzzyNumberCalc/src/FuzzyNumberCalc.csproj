@@ -58,10 +58,13 @@
     <Compile Include="Forms\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utils\CPoint.cs" />
     <Compile Include="Utils\FuzzyNumberTrapezoid.cs" />
+    <Compile Include="Utils\Interval.cs" />
     <Compile Include="Utils\MathsEvaluator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\Utils.cs" />
     <EmbeddedResource Include="Forms\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>

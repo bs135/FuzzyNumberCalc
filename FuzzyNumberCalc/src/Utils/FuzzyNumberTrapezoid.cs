@@ -52,5 +52,29 @@ namespace FuzzyNumberCalc.Utils
 
             return 0;
         }
+
+        public Interval AlphaCut(decimal y)
+        {
+            Interval result = new Interval();
+            if (y < 0 || y > 1) return null;
+
+            if (y == 0)
+            {
+                result.LowerBound = BottomLeft;
+                result.UpperBound = BottomRight;
+            }
+            else if (y == 1)
+            {
+                result.LowerBound = TopLeft;
+                result.UpperBound = TopRight;
+            }
+            else //if (0 < y && y < 1)
+            {
+                result.LowerBound = y * (TopLeft - BottomLeft) + BottomLeft;
+                result.UpperBound = y * (TopRight - BottomRight) + BottomRight;
+            }
+
+            return result;
+        }
     }
 }
