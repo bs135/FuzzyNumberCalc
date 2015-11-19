@@ -34,8 +34,11 @@
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.pnlLeft = new System.Windows.Forms.Panel();
+            this.grbOption = new System.Windows.Forms.GroupBox();
+            this.txtSmooth = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.grbFooter = new System.Windows.Forms.GroupBox();
-            this.btnOK = new System.Windows.Forms.Button();
+            this.buttonOK = new System.Windows.Forms.Button();
             this.grbFuzzyNumber = new System.Windows.Forms.GroupBox();
             this.grbFuzzyNumberB = new System.Windows.Forms.GroupBox();
             this.lblInvalidNumB = new System.Windows.Forms.Label();
@@ -60,10 +63,8 @@
             this.pnlMain = new System.Windows.Forms.Panel();
             this.chartFuzzy = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.epInValid = new System.Windows.Forms.ErrorProvider(this.components);
-            this.grbOption = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtSmooth = new System.Windows.Forms.TextBox();
             this.pnlLeft.SuspendLayout();
+            this.grbOption.SuspendLayout();
             this.grbFooter.SuspendLayout();
             this.grbFuzzyNumber.SuspendLayout();
             this.grbFuzzyNumberB.SuspendLayout();
@@ -73,7 +74,6 @@
             this.pnlMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartFuzzy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.epInValid)).BeginInit();
-            this.grbOption.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlLeft
@@ -89,9 +89,39 @@
             this.pnlLeft.Size = new System.Drawing.Size(246, 532);
             this.pnlLeft.TabIndex = 0;
             // 
+            // grbOption
+            // 
+            this.grbOption.Controls.Add(this.txtSmooth);
+            this.grbOption.Controls.Add(this.label1);
+            this.grbOption.Dock = System.Windows.Forms.DockStyle.Top;
+            this.grbOption.Location = new System.Drawing.Point(0, 345);
+            this.grbOption.Name = "grbOption";
+            this.grbOption.Size = new System.Drawing.Size(246, 66);
+            this.grbOption.TabIndex = 5;
+            this.grbOption.TabStop = false;
+            this.grbOption.Text = "Options";
+            // 
+            // txtSmooth
+            // 
+            this.txtSmooth.Location = new System.Drawing.Point(114, 26);
+            this.txtSmooth.Name = "txtSmooth";
+            this.txtSmooth.Size = new System.Drawing.Size(100, 20);
+            this.txtSmooth.TabIndex = 1;
+            this.txtSmooth.Text = "0.1";
+            this.txtSmooth.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 29);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(43, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Smooth";
+            // 
             // grbFooter
             // 
-            this.grbFooter.Controls.Add(this.btnOK);
+            this.grbFooter.Controls.Add(this.buttonOK);
             this.grbFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.grbFooter.Location = new System.Drawing.Point(0, 485);
             this.grbFooter.Name = "grbFooter";
@@ -99,15 +129,15 @@
             this.grbFooter.TabIndex = 4;
             this.grbFooter.TabStop = false;
             // 
-            // btnOK
+            // buttonOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(159, 15);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 0;
-            this.btnOK.Text = "OK";
-            this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            this.buttonOK.Location = new System.Drawing.Point(159, 15);
+            this.buttonOK.Name = "buttonOK";
+            this.buttonOK.Size = new System.Drawing.Size(75, 23);
+            this.buttonOK.TabIndex = 0;
+            this.buttonOK.Text = "OK";
+            this.buttonOK.UseVisualStyleBackColor = true;
+            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
             // grbFuzzyNumber
             // 
@@ -363,36 +393,6 @@
             this.epInValid.ContainerControl = this;
             this.epInValid.Icon = ((System.Drawing.Icon)(resources.GetObject("epInValid.Icon")));
             // 
-            // grbOption
-            // 
-            this.grbOption.Controls.Add(this.txtSmooth);
-            this.grbOption.Controls.Add(this.label1);
-            this.grbOption.Dock = System.Windows.Forms.DockStyle.Top;
-            this.grbOption.Location = new System.Drawing.Point(0, 345);
-            this.grbOption.Name = "grbOption";
-            this.grbOption.Size = new System.Drawing.Size(246, 66);
-            this.grbOption.TabIndex = 5;
-            this.grbOption.TabStop = false;
-            this.grbOption.Text = "Options";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 29);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(43, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Smooth";
-            // 
-            // txtSmooth
-            // 
-            this.txtSmooth.Location = new System.Drawing.Point(114, 26);
-            this.txtSmooth.Name = "txtSmooth";
-            this.txtSmooth.Size = new System.Drawing.Size(100, 20);
-            this.txtSmooth.TabIndex = 1;
-            this.txtSmooth.Text = "0.1";
-            this.txtSmooth.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -405,6 +405,8 @@
             this.Text = "FuzzyNumberCalc";
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.pnlLeft.ResumeLayout(false);
+            this.grbOption.ResumeLayout(false);
+            this.grbOption.PerformLayout();
             this.grbFooter.ResumeLayout(false);
             this.grbFuzzyNumber.ResumeLayout(false);
             this.grbFuzzyNumberB.ResumeLayout(false);
@@ -418,8 +420,6 @@
             this.pnlMain.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartFuzzy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.epInValid)).EndInit();
-            this.grbOption.ResumeLayout(false);
-            this.grbOption.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -437,7 +437,7 @@
         private System.Windows.Forms.TextBox txtATopRight;
         private System.Windows.Forms.TextBox txtATopLeft;
         private System.Windows.Forms.TextBox txtABotLeft;
-        private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.GroupBox grbFuzzyNumberB;
         private System.Windows.Forms.TextBox txtBTopLeft;
         private System.Windows.Forms.TextBox txtBBotLeft;

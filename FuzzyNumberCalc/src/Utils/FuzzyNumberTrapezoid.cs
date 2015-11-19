@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FuzzyNumberCalc.Utils
 {
-    public class FuzzyNumberTrapezoid
+    public class TrapezoidFuzzyNumber
     {
         public decimal BottomLeft { get; set; }
         public decimal BottomRight { get; set; }
@@ -14,7 +14,7 @@ namespace FuzzyNumberCalc.Utils
         public decimal TopRight { get; set; }
 
 
-        public FuzzyNumberTrapezoid()
+        public TrapezoidFuzzyNumber()
         {
             this.BottomLeft = this.BottomRight = this.TopLeft = this.TopRight = 0;
         }

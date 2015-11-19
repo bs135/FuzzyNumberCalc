@@ -15,7 +15,6 @@ namespace FuzzyNumberCalc
     public partial class FormMain : Form
     {
         decimal smooth = 0;
-
         public FormMain()
         {
             InitializeComponent();
@@ -34,6 +33,7 @@ namespace FuzzyNumberCalc
             chartFuzzy.ChartAreas[0].AxisX.Title = "R";
             chartFuzzy.ChartAreas[0].AxisX.Interval = 1;
             chartFuzzy.ChartAreas[0].AxisX.ArrowStyle = AxisArrowStyle.Lines;
+            chartFuzzy.ChartAreas[0].AxisX.Minimum = 0;
 
             chartFuzzy.ChartAreas[0].AxisY.MajorGrid.Enabled = true;
             chartFuzzy.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightGray;
@@ -42,74 +42,62 @@ namespace FuzzyNumberCalc
             chartFuzzy.ChartAreas[0].AxisY.Title = "P";
             chartFuzzy.ChartAreas[0].AxisY.Interval = 0.5;
             chartFuzzy.ChartAreas[0].AxisY.ArrowStyle = AxisArrowStyle.Lines;
+            chartFuzzy.ChartAreas[0].AxisY.Minimum = 0;
 
         }
 
-        private void btnOK_Click(object sender, EventArgs e)
+        private void buttonOK_Click(object sender, EventArgs e)
         {
             chartFuzzy.Series.Clear();
 
-            FuzzyNumberTrapezoid fnumA = new FuzzyNumberTrapezoid();
-            FuzzyNumberTrapezoid fnumB = new FuzzyNumberTrapezoid();
+            TrapezoidFuzzyNumber fnumA = new TrapezoidFuzzyNumber();
+            TrapezoidFuzzyNumber fnumB = new TrapezoidFuzzyNumber();
 
             if (validateAndGetInput(out fnumA, out fnumB))
             {
-                drawChartTrapezoidFuzzyNumber(ref chartFuzzy, "A", fnumA, Color.Green);
-                drawChartTrapezoidFuzzyNumber(ref chartFuzzy, "B", fnumB, Color.Blue);
+                drawTrapezoidFuzzyNumberGraph(ref chartFuzzy, "A", fnumA, Color.Green);
+                drawTrapezoidFuzzyNumberGraph(ref chartFuzzy, "B", fnumB, Color.Blue);
 
-                //// test
-                //Series testSeriesA = chartFuzzy.Series.Add("TestA");
-                //Series testSeriesB = chartFuzzy.Series.Add("TestB");
-                //testSeriesA.ChartType = SeriesChartType.Point;
-                //testSeriesA.BorderWidth = 2;
-                //testSeriesA.Color = Color.Green;
-                //testSeriesA.IsVisibleInLegend = false;
-                //testSeriesB.ChartType = SeriesChartType.Point;
-                //testSeriesB.BorderWidth = 2;
-                //testSeriesB.Color = Color.Blue;
-                //testSeriesB.IsVisibleInLegend = false;
-                //decimal x = 0;
-                //for (int i = 0; i < 50; i++)
-                //{
-                //    x = ((decimal)i) / 10m;
-                //    testSeriesA.Points.AddXY(x, fnumA.Probability(x));
-                //    testSeriesB.Points.AddXY(x, fnumB.Probability(x));
-                //}
+                if (chkOperationAdd.Checked) drawResultGraph(ref chartFuzzy, fnumA, fnumB, Operation.Add, Color.Magenta);
+                if (chkOperationSub.Checked) drawResultGraph(ref chartFuzzy, fnumA, fnumB, Operation.Sub, Color.Brown);
+                if (chkOperationMul.Checked) drawResultGraph(ref chartFuzzy, fnumA, fnumB, Operation.Mul, Color.Purple);
+                if (chkOperationDiv.Checked) drawResultGraph(ref chartFuzzy, fnumA, fnumB, Operation.Div, Color.Red);
 
-                Series testSeriesA = chartFuzzy.Series.Add("A_byPoint");
-                Series testSeriesB = chartFuzzy.Series.Add("B_byPoint");
-                testSeriesA.ChartType = SeriesChartType.Point;
-                testSeriesA.BorderWidth = 2;
-                testSeriesA.Color = Color.Green;
-                testSeriesA.IsVisibleInLegend = false;
-                testSeriesB.ChartType = SeriesChartType.Point;
-                testSeriesB.BorderWidth = 2;
-                testSeriesB.Color = Color.Blue;
-                testSeriesB.IsVisibleInLegend = false;
-                decimal y = 0;
-                Interval acut;
-                while (y <= 1)
-                {
-                    acut = fnumA.AlphaCut(y);
-                    testSeriesA.Points.AddXY(acut.LowerBound, y);
-                    testSeriesA.Points.AddXY(acut.UpperBound, y);
-                    acut = fnumB.AlphaCut(y);
-                    testSeriesB.Points.AddXY(acut.LowerBound, y);
-                    testSeriesB.Points.AddXY(acut.UpperBound, y);
-
-                    y = y + smooth;
-                }
-
-                if (chkOperationAdd.Checked) drawChartResult(ref chartFuzzy, fnumA, fnumB, Operation.Add, Color.Magenta);
-                if (chkOperationSub.Checked) drawChartResult(ref chartFuzzy, fnumA, fnumB, Operation.Sub, Color.Brown);
-                if (chkOperationMul.Checked) drawChartResult(ref chartFuzzy, fnumA, fnumB, Operation.Mul, Color.Purple);
-                if (chkOperationDiv.Checked) drawChartResult(ref chartFuzzy, fnumA, fnumB, Operation.Div, Color.Red);
-
+                resetGraphCoordinate(fnumA, fnumB);
             }
         }
 
-        private void drawChartTrapezoidFuzzyNumber(ref Chart chart, string name, FuzzyNumberTrapezoid fnum, Color color)
+        private void resetGraphCoordinate(TrapezoidFuzzyNumber fnumA, TrapezoidFuzzyNumber fnumB)
         {
+            // reset coordinate
+            decimal minAxisX = Math.Min(fnumA.BottomLeft, fnumB.BottomLeft);
+            Interval acut;
+            if (chkOperationAdd.Checked)
+            {
+                acut = ArithmeticInterval.Calculate(Operation.Add, fnumA.AlphaCut(0), fnumB.AlphaCut(0));
+                minAxisX = Math.Min(minAxisX, acut.LowerBound);
+            }
+            if (chkOperationSub.Checked)
+            {
+                acut = ArithmeticInterval.Calculate(Operation.Sub, fnumA.AlphaCut(0), fnumB.AlphaCut(0));
+                minAxisX = Math.Min(minAxisX, acut.LowerBound);
+            }
+            if (chkOperationMul.Checked)
+            {
+                acut = ArithmeticInterval.Calculate(Operation.Mul, fnumA.AlphaCut(0), fnumB.AlphaCut(0));
+                minAxisX = Math.Min(minAxisX, acut.LowerBound);
+            }
+            if (chkOperationDiv.Checked)
+            {
+                acut = ArithmeticInterval.Calculate(Operation.Div, fnumA.AlphaCut(0), fnumB.AlphaCut(0));
+                minAxisX = Math.Min(minAxisX, acut.LowerBound);
+            }
+            chartFuzzy.ChartAreas[0].AxisX.Minimum = (int)Math.Floor(minAxisX);
+        }
+
+        private void drawTrapezoidFuzzyNumberGraph(ref Chart chart, string name, TrapezoidFuzzyNumber fnum, Color color)
+        {
+            // chart by line
             Series series = chart.Series.Add(name);
             series.ChartType = SeriesChartType.Line;
             series.BorderWidth = 2;
@@ -119,21 +107,40 @@ namespace FuzzyNumberCalc
             series.Points.AddXY(fnum.TopLeft, 1);
             series.Points.AddXY(fnum.TopRight, 1);
             series.Points.AddXY(fnum.BottomRight, 0);
+
+            // chart by point
+            Series seriesPoint = chartFuzzy.Series.Add(name + "_point");
+            seriesPoint.ChartType = SeriesChartType.Point;
+            seriesPoint.BorderWidth = 2;
+            seriesPoint.Color = color;
+            seriesPoint.IsVisibleInLegend = false;
+            decimal y = 0;
+            Interval acut;
+            while (y <= 1)
+            {
+                acut = fnum.AlphaCut(y);
+                seriesPoint.Points.AddXY(acut.LowerBound, y);
+                seriesPoint.Points.AddXY(acut.UpperBound, y);
+                y = y + smooth;
+            }
+
         }
 
-        private void drawChartResult(ref Chart chart, FuzzyNumberTrapezoid fnumA, FuzzyNumberTrapezoid fnumB, Operation operation, Color color)
+        private void drawResultGraph(ref Chart chart, TrapezoidFuzzyNumber fnumA, TrapezoidFuzzyNumber fnumB, Operation operation, Color color)
         {
+            // chart by line
             Series series = chart.Series.Add(operation.ToString());
             series.ChartType = SeriesChartType.Line;
             series.BorderWidth = 2;
             series.Color = color;
-
+            // chart by point
             Series seriesPoint = chart.Series.Add(operation.ToString() + "_point");
             seriesPoint.ChartType = SeriesChartType.Point;
             seriesPoint.BorderWidth = 2;
             seriesPoint.Color = color;
             seriesPoint.IsVisibleInLegend = false;
 
+            // calculate result points list
             decimal y = 0;
             Interval acut, a, b;
             List<CPoint> resultPointList = new List<CPoint>();
@@ -148,18 +155,21 @@ namespace FuzzyNumberCalc
                 y += smooth;
             }
 
+            // draw the graph
             foreach (CPoint p in resultPointList.OrderBy(i => i.x))
             {
+                // by line
                 series.Points.AddXY(p.x, p.y);
+                // by point
                 seriesPoint.Points.AddXY(p.x, p.y);
             }
         }
 
-        private bool validateAndGetInput(out FuzzyNumberTrapezoid fnumA, out FuzzyNumberTrapezoid fnumB)
+        private bool validateAndGetInput(out TrapezoidFuzzyNumber fnumA, out TrapezoidFuzzyNumber fnumB)
         {
             bool result = true;
-            fnumA = new FuzzyNumberTrapezoid();
-            fnumB = new FuzzyNumberTrapezoid();
+            fnumA = new TrapezoidFuzzyNumber();
+            fnumB = new TrapezoidFuzzyNumber();
             decimal val = 0;
 
             epInValid.Clear();
