@@ -46,4 +46,31 @@ namespace FuzzyNumberCalc.Utils
             return result;
         }
     }
+
+    public static class ExtensionPrinciple
+    {
+        public static decimal Calculate(Operation operation, decimal a, decimal b)
+        {
+            decimal result = 0;
+            switch (operation)
+            {
+                case Operation.Add:
+                    result = a + b;
+                    break;
+                case Operation.Sub:
+                    result = a - b;
+                    break;
+                case Operation.Mul:
+                    result = a * b;
+                    break;
+                case Operation.Div:
+                    if (b != 0)
+                        result = a / b;
+                    break;
+                default:
+                    break;
+            }
+            return result;
+        }
+    }
 }
