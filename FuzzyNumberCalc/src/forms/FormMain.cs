@@ -15,6 +15,8 @@ namespace FuzzyNumberCalc
     public partial class FormMain : Form
     {
         decimal smooth = 0;
+        int numOfFracDigi = 3;
+
         public FormMain()
         {
             InitializeComponent();
@@ -34,6 +36,9 @@ namespace FuzzyNumberCalc
             chartFuzzy.ChartAreas[0].AxisX.Interval = 1;
             chartFuzzy.ChartAreas[0].AxisX.ArrowStyle = AxisArrowStyle.Lines;
             chartFuzzy.ChartAreas[0].AxisX.Minimum = 0;
+            chartFuzzy.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+            chartFuzzy.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
+            chartFuzzy.ChartAreas[0].CursorX.AutoScroll = true;
 
             chartFuzzy.ChartAreas[0].AxisY.MajorGrid.Enabled = true;
             chartFuzzy.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightGray;
@@ -43,7 +48,9 @@ namespace FuzzyNumberCalc
             chartFuzzy.ChartAreas[0].AxisY.Interval = 0.5;
             chartFuzzy.ChartAreas[0].AxisY.ArrowStyle = AxisArrowStyle.Lines;
             chartFuzzy.ChartAreas[0].AxisY.Minimum = 0;
-
+            //chartFuzzy.ChartAreas[0].AxisY.ScaleView.Zoomable = true;
+            //chartFuzzy.ChartAreas[0].CursorY.IsUserSelectionEnabled = true;
+            //chartFuzzy.ChartAreas[0].CursorY.AutoScroll = true;
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -58,7 +65,7 @@ namespace FuzzyNumberCalc
                 return;
             }
 
-            if (chkOperationDiv.Checked && fnumB.IsZero())
+            if (checkBoxOperationDiv.Checked && fnumB.IsZero())
             {
                 MessageBox.Show("Cannot divide by zero.", "Error!");
                 return;
@@ -67,21 +74,21 @@ namespace FuzzyNumberCalc
             drawTrapezoidFuzzyNumberGraph(ref chartFuzzy, "A", fnumA, Color.Green);
             drawTrapezoidFuzzyNumberGraph(ref chartFuzzy, "B", fnumB, Color.Blue);
 
-            if (radIntervalBased.Checked)
+            if (optionBoxIntervalBased.Checked)
             {
-                if (chkOperationAdd.Checked) drawResultIntervalBasedGraph(ref chartFuzzy, fnumA, fnumB, Operation.Add, Color.Magenta);
-                if (chkOperationSub.Checked) drawResultIntervalBasedGraph(ref chartFuzzy, fnumA, fnumB, Operation.Sub, Color.Chocolate);
-                if (chkOperationMul.Checked) drawResultIntervalBasedGraph(ref chartFuzzy, fnumA, fnumB, Operation.Mul, Color.Purple);
-                if (chkOperationDiv.Checked) drawResultIntervalBasedGraph(ref chartFuzzy, fnumA, fnumB, Operation.Div, Color.Red);
+                if (checkBoxOperationAdd.Checked) drawResultIntervalBasedGraph(ref chartFuzzy, fnumA, fnumB, Operation.Add, Color.Magenta);
+                if (checkBoxOperationSub.Checked) drawResultIntervalBasedGraph(ref chartFuzzy, fnumA, fnumB, Operation.Sub, Color.Chocolate);
+                if (checkBoxOperationMul.Checked) drawResultIntervalBasedGraph(ref chartFuzzy, fnumA, fnumB, Operation.Mul, Color.Purple);
+                if (checkBoxOperationDiv.Checked) drawResultIntervalBasedGraph(ref chartFuzzy, fnumA, fnumB, Operation.Div, Color.Red);
 
                 resetGraphCoordinate(fnumA, fnumB);
             }
             else //if (radEPBased.Checked)
             {
-                if (chkOperationAdd.Checked) drawResultEPBasedGraph(ref chartFuzzy, fnumA, fnumB, Operation.Add, Color.Magenta);
-                if (chkOperationSub.Checked) drawResultEPBasedGraph(ref chartFuzzy, fnumA, fnumB, Operation.Sub, Color.Chocolate);
-                if (chkOperationMul.Checked) drawResultEPBasedGraph(ref chartFuzzy, fnumA, fnumB, Operation.Mul, Color.Purple);
-                if (chkOperationDiv.Checked) drawResultEPBasedGraph(ref chartFuzzy, fnumA, fnumB, Operation.Div, Color.Red);
+                if (checkBoxOperationAdd.Checked) drawResultEPBasedGraph(ref chartFuzzy, fnumA, fnumB, Operation.Add, Color.Magenta);
+                if (checkBoxOperationSub.Checked) drawResultEPBasedGraph(ref chartFuzzy, fnumA, fnumB, Operation.Sub, Color.Chocolate);
+                if (checkBoxOperationMul.Checked) drawResultEPBasedGraph(ref chartFuzzy, fnumA, fnumB, Operation.Mul, Color.Purple);
+                if (checkBoxOperationDiv.Checked) drawResultEPBasedGraph(ref chartFuzzy, fnumA, fnumB, Operation.Div, Color.Red);
 
                 resetGraphCoordinate(fnumA, fnumB);
             }
@@ -89,17 +96,6 @@ namespace FuzzyNumberCalc
 
         private void drawTrapezoidFuzzyNumberGraph(ref Chart chart, string name, TrapezoidFuzzyNumber fnum, Color color)
         {
-            // chart by line
-            Series series = chart.Series.Add(name);
-            series.ChartType = SeriesChartType.Line;
-            series.BorderWidth = 2;
-            series.Color = color;
-
-            series.Points.AddXY(fnum.BottomLeft, 0);
-            series.Points.AddXY(fnum.TopLeft, 1);
-            series.Points.AddXY(fnum.TopRight, 1);
-            series.Points.AddXY(fnum.BottomRight, 0);
-
             // chart by point
             Series seriesPoint = chartFuzzy.Series.Add(name + "_point");
             seriesPoint.ChartType = SeriesChartType.Point;
@@ -116,22 +112,32 @@ namespace FuzzyNumberCalc
                 y = y + smooth;
             }
 
+            y = 1;
+            acut = fnum.AlphaCut(y);
+            decimal x = acut.LowerBound;
+            while (x <= acut.UpperBound)
+            {
+                seriesPoint.Points.AddXY(x, y);
+                x += smooth;
+            }
+
+            // chart by line
+            Series series = chart.Series.Add(name);
+            series.ChartType = SeriesChartType.Line;
+            series.BorderWidth = 2;
+            series.Color = color;
+
+            if (checkBoxDrawLine.Checked)
+            {
+                series.Points.AddXY(fnum.BottomLeft, 0);
+                series.Points.AddXY(fnum.TopLeft, 1);
+                series.Points.AddXY(fnum.TopRight, 1);
+                series.Points.AddXY(fnum.BottomRight, 0);
+            }
         }
 
         private void drawResultIntervalBasedGraph(ref Chart chart, TrapezoidFuzzyNumber fnumA, TrapezoidFuzzyNumber fnumB, Operation operation, Color color)
         {
-            // chart by line
-            Series series = chart.Series.Add(operation.ToString());
-            series.ChartType = SeriesChartType.Line;
-            series.BorderWidth = 2;
-            series.Color = color;
-            // chart by point
-            Series seriesPoint = chart.Series.Add(operation.ToString() + "_point");
-            seriesPoint.ChartType = SeriesChartType.Point;
-            seriesPoint.BorderWidth = 2;
-            seriesPoint.Color = color;
-            seriesPoint.IsVisibleInLegend = false;
-
             // calculate result points list
             decimal y = 0;
             Interval acut, a, b;
@@ -148,31 +154,22 @@ namespace FuzzyNumberCalc
                 y += smooth;
             }
 
-            // draw the graph
-            foreach (CPoint p in resultPointListLeft.OrderBy(i => i.x).OrderBy(i=>i.y))
+            y = 1;
+            a = fnumA.AlphaCut(y);
+            b = fnumB.AlphaCut(y);
+            acut = ArithmeticInterval.Calculate(operation, a, b);
+            decimal x = acut.LowerBound;
+            while (x <= acut.UpperBound)
             {
-                // by line
-                series.Points.AddXY(p.x, p.y);
-                // by point
-                seriesPoint.Points.AddXY(p.x, p.y);
-            }
-            foreach (CPoint p in resultPointListRight.OrderBy(i => i.x).OrderByDescending(i => i.y))
-            {
-                // by line
-                series.Points.AddXY(p.x, p.y);
-                // by point
-                seriesPoint.Points.AddXY(p.x, p.y);
+                resultPointListLeft.Add(new CPoint(x, y));
+                x += smooth;
             }
 
-        }
-
-        private void drawResultEPBasedGraph(ref Chart chart, TrapezoidFuzzyNumber fnumA, TrapezoidFuzzyNumber fnumB, Operation operation, Color color)
-        {
             // chart by line
-            Series series = chart.Series.Add(operation.ToString());
-            series.ChartType = SeriesChartType.Line;
-            series.BorderWidth = 2;
-            series.Color = color;
+            Series seriesLine = chart.Series.Add(operation.ToString());
+            seriesLine.ChartType = SeriesChartType.Line;
+            seriesLine.BorderWidth = 2;
+            seriesLine.Color = color;
             // chart by point
             Series seriesPoint = chart.Series.Add(operation.ToString() + "_point");
             seriesPoint.ChartType = SeriesChartType.Point;
@@ -180,6 +177,31 @@ namespace FuzzyNumberCalc
             seriesPoint.Color = color;
             seriesPoint.IsVisibleInLegend = false;
 
+            // draw the graph
+            foreach (CPoint p in resultPointListLeft.OrderBy(i => i.x).OrderBy(i => i.y))
+            {
+                // by line
+                if (checkBoxDrawLine.Checked)
+                    seriesLine.Points.AddXY(p.x, p.y);
+                // by point
+                seriesPoint.Points.AddXY(p.x, p.y);
+            }
+            foreach (CPoint p in resultPointListRight.OrderBy(i => i.x).OrderByDescending(i => i.y))
+            {
+                // by line
+                if (checkBoxDrawLine.Checked)
+                    seriesLine.Points.AddXY(p.x, p.y);
+                // by point
+                seriesPoint.Points.AddXY(p.x, p.y);
+            }
+
+            addLog(operation.ToString() + " num of point :" + (resultPointListLeft.Count + resultPointListRight.Count).ToString());
+            resultPointListLeft.Clear();
+            resultPointListRight.Clear();
+        }
+
+        private void drawResultEPBasedGraph(ref Chart chart, TrapezoidFuzzyNumber fnumA, TrapezoidFuzzyNumber fnumB, Operation operation, Color color)
+        {
             // calculate result points list
             decimal xA, xB, xResult;
             decimal aProbability, bProbability, minProbability;
@@ -192,6 +214,9 @@ namespace FuzzyNumberCalc
                 while (xB <= fnumB.BottomRight)
                 {
                     xResult = ExtensionPrinciple.Calculate(operation, xA, xB);
+                    //if (operation == Operation.Mul || operation == Operation.Div)
+                    xResult = Math.Round(xResult, numOfFracDigi);
+
                     aProbability = fnumA.Probability(xA);
                     bProbability = fnumB.Probability(xB);
                     minProbability = Math.Min(aProbability, bProbability);
@@ -212,17 +237,30 @@ namespace FuzzyNumberCalc
                 xA += smooth;
             }
 
-
+            // chart by line
+            Series seriesLine = chart.Series.Add(operation.ToString());
+            seriesLine.ChartType = SeriesChartType.Line;
+            seriesLine.BorderWidth = 2;
+            seriesLine.Color = color;
+            // chart by point
+            Series seriesPoint = chart.Series.Add(operation.ToString() + "_point");
+            seriesPoint.ChartType = SeriesChartType.Point;
+            seriesPoint.BorderWidth = 2;
+            seriesPoint.Color = color;
+            seriesPoint.IsVisibleInLegend = false;
 
             // draw the graph
             foreach (CPoint p in resultPointList.OrderBy(i => i.x))
             {
                 // by line
-                //series.Points.AddXY(p.x, p.y);
+                if (checkBoxDrawLine.Checked)
+                    seriesLine.Points.AddXY(p.x, p.y);
                 // by point
                 seriesPoint.Points.AddXY(p.x, p.y);
             }
 
+            addLog(operation.ToString() + " num of point :" + resultPointList.Count.ToString());
+            resultPointList.Clear();
         }
 
         private void resetGraphCoordinate(TrapezoidFuzzyNumber fnumA, TrapezoidFuzzyNumber fnumB)
@@ -230,22 +268,22 @@ namespace FuzzyNumberCalc
             // reset coordinate
             decimal minAxisX = Math.Min(fnumA.BottomLeft, fnumB.BottomLeft);
             Interval acut;
-            if (chkOperationAdd.Checked)
+            if (checkBoxOperationAdd.Checked)
             {
                 acut = ArithmeticInterval.Calculate(Operation.Add, fnumA.AlphaCut(0), fnumB.AlphaCut(0));
                 minAxisX = Math.Min(minAxisX, acut.LowerBound);
             }
-            if (chkOperationSub.Checked)
+            if (checkBoxOperationSub.Checked)
             {
                 acut = ArithmeticInterval.Calculate(Operation.Sub, fnumA.AlphaCut(0), fnumB.AlphaCut(0));
                 minAxisX = Math.Min(minAxisX, acut.LowerBound);
             }
-            if (chkOperationMul.Checked)
+            if (checkBoxOperationMul.Checked)
             {
                 acut = ArithmeticInterval.Calculate(Operation.Mul, fnumA.AlphaCut(0), fnumB.AlphaCut(0));
                 minAxisX = Math.Min(minAxisX, acut.LowerBound);
             }
-            if (chkOperationDiv.Checked && !fnumB.IsZero())
+            if (checkBoxOperationDiv.Checked && !fnumB.IsZero())
             {
                 acut = ArithmeticInterval.Calculate(Operation.Div, fnumA.AlphaCut(0), fnumB.AlphaCut(0));
                 minAxisX = Math.Min(minAxisX, acut.LowerBound);
@@ -264,9 +302,9 @@ namespace FuzzyNumberCalc
 
 
             // number A
-            if (!MathsEvaluator.TryParse(txtABotLeft.Text, out val))
+            if (!MathsEvaluator.TryParse(textBoxABotLeft.Text, out val))
             {
-                epInValid.SetError(txtABotLeft, "Invalid input");
+                epInValid.SetError(textBoxABotLeft, "Invalid input");
                 result = false;
             }
             else
@@ -275,9 +313,9 @@ namespace FuzzyNumberCalc
             }
 
 
-            if (!MathsEvaluator.TryParse(txtABotRight.Text, out val))
+            if (!MathsEvaluator.TryParse(textBoxABotRight.Text, out val))
             {
-                epInValid.SetError(txtABotRight, "Invalid input");
+                epInValid.SetError(textBoxABotRight, "Invalid input");
                 result = false;
             }
             else
@@ -286,9 +324,9 @@ namespace FuzzyNumberCalc
             }
 
 
-            if (!MathsEvaluator.TryParse(txtATopLeft.Text, out val))
+            if (!MathsEvaluator.TryParse(textBoxATopLeft.Text, out val))
             {
-                epInValid.SetError(txtATopLeft, "Invalid input");
+                epInValid.SetError(textBoxATopLeft, "Invalid input");
                 result = false;
             }
             else
@@ -297,9 +335,9 @@ namespace FuzzyNumberCalc
             }
 
 
-            if (!MathsEvaluator.TryParse(txtATopRight.Text, out val))
+            if (!MathsEvaluator.TryParse(textBoxATopRight.Text, out val))
             {
-                epInValid.SetError(txtATopRight, "Invalid input");
+                epInValid.SetError(textBoxATopRight, "Invalid input");
                 result = false;
             }
             else
@@ -310,9 +348,9 @@ namespace FuzzyNumberCalc
 
             // number B
 
-            if (!MathsEvaluator.TryParse(txtBBotLeft.Text, out val))
+            if (!MathsEvaluator.TryParse(textBoxBBotLeft.Text, out val))
             {
-                epInValid.SetError(txtBBotLeft, "Invalid input");
+                epInValid.SetError(textBoxBBotLeft, "Invalid input");
                 result = false;
             }
             else
@@ -321,9 +359,9 @@ namespace FuzzyNumberCalc
             }
 
 
-            if (!MathsEvaluator.TryParse(txtBBotRight.Text, out val))
+            if (!MathsEvaluator.TryParse(textBoxBBotRight.Text, out val))
             {
-                epInValid.SetError(txtBBotRight, "Invalid input");
+                epInValid.SetError(textBoxBBotRight, "Invalid input");
                 result = false;
             }
             else
@@ -332,9 +370,9 @@ namespace FuzzyNumberCalc
             }
 
 
-            if (!MathsEvaluator.TryParse(txtBTopLeft.Text, out val))
+            if (!MathsEvaluator.TryParse(textBoxBTopLeft.Text, out val))
             {
-                epInValid.SetError(txtBTopLeft, "Invalid input");
+                epInValid.SetError(textBoxBTopLeft, "Invalid input");
                 result = false;
             }
             else
@@ -343,9 +381,9 @@ namespace FuzzyNumberCalc
             }
 
 
-            if (!MathsEvaluator.TryParse(txtBTopRight.Text, out val))
+            if (!MathsEvaluator.TryParse(textBoxBTopRight.Text, out val))
             {
-                epInValid.SetError(txtBTopRight, "Invalid input");
+                epInValid.SetError(textBoxBTopRight, "Invalid input");
                 result = false;
             }
             else
@@ -354,16 +392,16 @@ namespace FuzzyNumberCalc
             }
 
             // options
-            if (!MathsEvaluator.TryParse(txtSmooth.Text, out val))
+            if (!MathsEvaluator.TryParse(textBoxSmoothly.Text, out val))
             {
-                epInValid.SetError(txtSmooth, "Invalid input");
+                epInValid.SetError(textBoxSmoothly, "Invalid input");
                 result = false;
             }
             else
             {
                 if (val <= 0 || val > 1)
                 {
-                    epInValid.SetError(txtSmooth, "Smooth is a number in (0,1]");
+                    epInValid.SetError(textBoxSmoothly, "Smooth is a number in (0,1]");
                     result = false;
                 }
                 else
@@ -371,6 +409,25 @@ namespace FuzzyNumberCalc
                     smooth = val;
                 }
             }
+
+            if (!MathsEvaluator.TryParse(textBoxNumOfFracDigi.Text, out val))
+            {
+                epInValid.SetError(textBoxNumOfFracDigi, "Invalid input");
+                result = false;
+            }
+            else
+            {
+                if (val < 0 || val > 10)
+                {
+                    epInValid.SetError(textBoxNumOfFracDigi, "Number of fractional digits is a number in [0,10]");
+                    result = false;
+                }
+                else
+                {
+                    numOfFracDigi = (int)val;
+                }
+            }
+
 
             // Trapezoid Fuzzy Number validation
             if (result)
@@ -392,22 +449,28 @@ namespace FuzzyNumberCalc
             // re-format input
             if (result)
             {
-                txtABotLeft.Text = fnumA.BottomLeft.ToString();
-                txtABotRight.Text = fnumA.BottomRight.ToString();
-                txtATopLeft.Text = fnumA.TopLeft.ToString();
-                txtATopRight.Text = fnumA.TopRight.ToString();
+                textBoxABotLeft.Text = fnumA.BottomLeft.ToString();
+                textBoxABotRight.Text = fnumA.BottomRight.ToString();
+                textBoxATopLeft.Text = fnumA.TopLeft.ToString();
+                textBoxATopRight.Text = fnumA.TopRight.ToString();
 
-                txtBBotLeft.Text = fnumB.BottomLeft.ToString();
-                txtBBotRight.Text = fnumB.BottomRight.ToString();
-                txtBTopLeft.Text = fnumB.TopLeft.ToString();
-                txtBTopRight.Text = fnumB.TopRight.ToString();
+                textBoxBBotLeft.Text = fnumB.BottomLeft.ToString();
+                textBoxBBotRight.Text = fnumB.BottomRight.ToString();
+                textBoxBTopLeft.Text = fnumB.TopLeft.ToString();
+                textBoxBTopRight.Text = fnumB.TopRight.ToString();
 
-                txtSmooth.Text = smooth.ToString();
+                textBoxSmoothly.Text = smooth.ToString();
+                textBoxNumOfFracDigi.Text = numOfFracDigi.ToString();
             }
 
 
             return result;
         }
 
+        private void addLog(string msg)
+        {
+            textBoxLog.AppendText(msg);
+            textBoxLog.AppendText(Environment.NewLine);
+        }
     }
 }
