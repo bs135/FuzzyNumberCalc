@@ -53,7 +53,7 @@ namespace FuzzyNumberCalc
             //chartFuzzy.ChartAreas[0].CursorY.AutoScroll = true;
         }
 
-        private void buttonOK_Click(object sender, EventArgs e)
+        private void buttonRun_Click(object sender, EventArgs e)
         {
             chartFuzzy.Series.Clear();
             TrapezoidFuzzyNumber fnumA = new TrapezoidFuzzyNumber();
@@ -469,8 +469,8 @@ namespace FuzzyNumberCalc
 
         private void addLog(string msg)
         {
-            textBoxLog.AppendText(msg);
             textBoxLog.AppendText(Environment.NewLine);
+            textBoxLog.AppendText(msg);
         }
     }
 }

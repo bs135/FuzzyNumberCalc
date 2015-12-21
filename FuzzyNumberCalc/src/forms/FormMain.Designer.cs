@@ -35,9 +35,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.pnlLeft = new System.Windows.Forms.Panel();
             this.pnlBottom = new System.Windows.Forms.Panel();
+            this.textBoxLog = new System.Windows.Forms.TextBox();
             this.grbFooter = new System.Windows.Forms.GroupBox();
             this.buttonRun = new System.Windows.Forms.Button();
             this.grbParameters = new System.Windows.Forms.GroupBox();
+            this.checkBoxDrawLine = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBoxNumOfFracDigi = new System.Windows.Forms.TextBox();
             this.textBoxSmoothly = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.grbFuzzyNumber = new System.Windows.Forms.GroupBox();
@@ -64,10 +68,6 @@
             this.pnlMain = new System.Windows.Forms.Panel();
             this.chartFuzzy = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.epInValid = new System.Windows.Forms.ErrorProvider(this.components);
-            this.textBoxLog = new System.Windows.Forms.TextBox();
-            this.textBoxNumOfFracDigi = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.checkBoxDrawLine = new System.Windows.Forms.CheckBox();
             this.pnlLeft.SuspendLayout();
             this.pnlBottom.SuspendLayout();
             this.grbFooter.SuspendLayout();
@@ -105,6 +105,19 @@
             this.pnlBottom.Size = new System.Drawing.Size(246, 69);
             this.pnlBottom.TabIndex = 6;
             // 
+            // textBoxLog
+            // 
+            this.textBoxLog.BackColor = System.Drawing.SystemColors.Control;
+            this.textBoxLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxLog.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxLog.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.textBoxLog.Location = new System.Drawing.Point(0, 0);
+            this.textBoxLog.Multiline = true;
+            this.textBoxLog.Name = "textBoxLog";
+            this.textBoxLog.Size = new System.Drawing.Size(246, 69);
+            this.textBoxLog.TabIndex = 0;
+            // 
             // grbFooter
             // 
             this.grbFooter.Controls.Add(this.buttonRun);
@@ -123,7 +136,7 @@
             this.buttonRun.TabIndex = 0;
             this.buttonRun.Text = "RUN";
             this.buttonRun.UseVisualStyleBackColor = true;
-            this.buttonRun.Click += new System.EventHandler(this.buttonOK_Click);
+            this.buttonRun.Click += new System.EventHandler(this.buttonRun_Click);
             // 
             // grbParameters
             // 
@@ -139,6 +152,37 @@
             this.grbParameters.TabIndex = 5;
             this.grbParameters.TabStop = false;
             this.grbParameters.Text = "Parameters";
+            // 
+            // checkBoxDrawLine
+            // 
+            this.checkBoxDrawLine.AutoSize = true;
+            this.checkBoxDrawLine.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxDrawLine.Checked = true;
+            this.checkBoxDrawLine.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxDrawLine.Location = new System.Drawing.Point(72, 72);
+            this.checkBoxDrawLine.Name = "checkBoxDrawLine";
+            this.checkBoxDrawLine.Size = new System.Drawing.Size(70, 17);
+            this.checkBoxDrawLine.TabIndex = 4;
+            this.checkBoxDrawLine.Text = "Draw line";
+            this.checkBoxDrawLine.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(0, 42);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(122, 27);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Number of fractional digits (in round number)";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // textBoxNumOfFracDigi
+            // 
+            this.textBoxNumOfFracDigi.Location = new System.Drawing.Point(128, 42);
+            this.textBoxNumOfFracDigi.Name = "textBoxNumOfFracDigi";
+            this.textBoxNumOfFracDigi.Size = new System.Drawing.Size(86, 20);
+            this.textBoxNumOfFracDigi.TabIndex = 2;
+            this.textBoxNumOfFracDigi.Text = "2";
+            this.textBoxNumOfFracDigi.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // textBoxSmoothly
             // 
@@ -411,50 +455,6 @@
             this.epInValid.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.epInValid.ContainerControl = this;
             this.epInValid.Icon = ((System.Drawing.Icon)(resources.GetObject("epInValid.Icon")));
-            // 
-            // textBoxLog
-            // 
-            this.textBoxLog.BackColor = System.Drawing.SystemColors.Control;
-            this.textBoxLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxLog.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLog.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.textBoxLog.Location = new System.Drawing.Point(0, 0);
-            this.textBoxLog.Multiline = true;
-            this.textBoxLog.Name = "textBoxLog";
-            this.textBoxLog.Size = new System.Drawing.Size(246, 69);
-            this.textBoxLog.TabIndex = 0;
-            // 
-            // textBoxNumOfFracDigi
-            // 
-            this.textBoxNumOfFracDigi.Location = new System.Drawing.Point(128, 42);
-            this.textBoxNumOfFracDigi.Name = "textBoxNumOfFracDigi";
-            this.textBoxNumOfFracDigi.Size = new System.Drawing.Size(86, 20);
-            this.textBoxNumOfFracDigi.TabIndex = 2;
-            this.textBoxNumOfFracDigi.Text = "2";
-            this.textBoxNumOfFracDigi.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label2
-            // 
-            this.label2.Location = new System.Drawing.Point(0, 42);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(122, 27);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Number of fractional digits (in round number)";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // checkBoxDrawLine
-            // 
-            this.checkBoxDrawLine.AutoSize = true;
-            this.checkBoxDrawLine.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBoxDrawLine.Checked = true;
-            this.checkBoxDrawLine.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxDrawLine.Location = new System.Drawing.Point(72, 72);
-            this.checkBoxDrawLine.Name = "checkBoxDrawLine";
-            this.checkBoxDrawLine.Size = new System.Drawing.Size(70, 17);
-            this.checkBoxDrawLine.TabIndex = 4;
-            this.checkBoxDrawLine.Text = "Draw line";
-            this.checkBoxDrawLine.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
