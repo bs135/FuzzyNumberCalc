@@ -1,6 +1,9 @@
 # FuzzyNumberCalc
 Knowledge-Based Systems Assignment
-by BS
+
+> by BS
+
+<img src="https://github.com/bs135/FuzzyNumberCalc/raw/master/Reources/x256_calc.png" width="50">
 
 ##### Introduction
 This is my assignment at school. 
@@ -20,5 +23,8 @@ His home page [here](http://cse.hcmut.edu.vn/~tru/)
 > Thanh-Hai Nguyen
 
 Ho Chi Minh city, University of Technology.
+
+##### Screen Shoot
+![ScreenShoot](https://github.com/bs135/FuzzyNumberCalc/raw/master/Reources/ScreenCapture01.png)
 
 ##### Ho Chi Minh City, 2015-12
