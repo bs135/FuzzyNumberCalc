@@ -1,30 +1,23 @@
-# FuzzyNumberCalc
-Knowledge-Based Systems Assignment
-
-> by BS
+![License](https://img.shields.io/badge/license-MIT-green.svg?style=plastic)
 
 <img src="https://github.com/bs135/FuzzyNumberCalc/raw/master/Reources/x256_calc.png" width="50">
 
-##### Introduction
-This is my assignment at school. 
+##### Ho Chi Minh City, December 10, 2015
 
-- Subject name: Knowledge-Based Systems
-- [Lecture note](http://cse.hcmut.edu.vn/~tru/KB-SYSTEMS/fuzzy-theory-new.pdf)
+# Introduction
+This is my assignment at college. 
 
-##### Requirement
+> Course: MCS, HCMUT<br />
+> Subject: Knowledge-Based Systems<br />
+> Instructor: [Professor Dr. Tru Hoang Cao](http://cse.hcmut.edu.vn/~tru/)
+
+
+##### Assignment Requirement
 Realization of arithmetic operations (addition, subtraction, multiplication, division) on fuzzy number using: extension principle and arithmetic interval-based. Drawing the graph to show the fuzzy numbers are arguments and results of operations.
 
-##### Instructor
-> Professor Dr. Tru Hoang Cao
-
-His home page [here](http://cse.hcmut.edu.vn/~tru/)
-
-##### Author
-> Thanh-Hai Nguyen
-
-Ho Chi Minh city, University of Technology.
-
-##### Screen Shoot
+# Screen Shoot
 ![ScreenShoot](https://github.com/bs135/FuzzyNumberCalc/raw/master/Reources/ScreenCapture01.png)
 
-##### Ho Chi Minh City, 2015-12
+# Help & Reference
+- [Report](https://github.com/bs135/FuzzyNumberCalc/blob/master/Report/BaoCao_BaiTapLon.pdf)
+- [Lecture note](http://cse.hcmut.edu.vn/~tru/KB-SYSTEMS/fuzzy-theory-new.pdf)
