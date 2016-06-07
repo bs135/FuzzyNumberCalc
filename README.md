@@ -2,7 +2,7 @@
 
 <img src="https://github.com/bs135/FuzzyNumberCalc/raw/master/Reources/x256_calc.png" width="50">
 
-######## Ho Chi Minh City, December 10, 2015
+###### Ho Chi Minh City, December 10, 2015
 
 # Introduction
 This is my assignment at college. 
