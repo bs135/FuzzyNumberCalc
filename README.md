@@ -16,8 +16,10 @@ This is my assignment at college.
 Realization of arithmetic operations (addition, subtraction, multiplication, division) on fuzzy number using: extension principle and arithmetic interval-based. Drawing the graph to show the fuzzy numbers are arguments and results of operations.
 
 # Screen Shoot
-![ScreenShoot](https://github.com/bs135/FuzzyNumberCalc/raw/master/Reources/ScreenCapture01.png)
+![ScreenShoot](https://github.com/bs135/FuzzyNumberCalc/raw/master/Screenshot/ScreenCapture01.png)
 
 # Help & Reference
-- [Report](https://github.com/bs135/FuzzyNumberCalc/blob/master/Report/BaoCao_BaiTapLon.pdf)
+- [L. A. Zadeh, Fuzzy Sets, 1965](https://github.com/bs135/FuzzyNumberCalc/blob/master/References/Fuzzy%20Sets-Information%20and%20Control-1965.pdf)
 - [Lecture note](http://cse.hcmut.edu.vn/~tru/KB-SYSTEMS/fuzzy-theory-new.pdf)
+- [Report](https://github.com/bs135/FuzzyNumberCalc/blob/master/Report/BaoCao_BaiTapLon.pdf)
+
